@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'MyUser.dart';
 
 class PasswordBox extends StatelessWidget {
-  final BuildContext context;
   final FocusNode mFocusNode;
-  final onClick;
+  final Function onClick;
   final TextEditingController controller;
-  final MyUser myUser;
+  final MyUserProfile myUser;
 
-
-  const PasswordBox(
-      this.context, this.onClick, this.mFocusNode, this.controller, this.myUser);
+  const PasswordBox({this.onClick, this.mFocusNode,
+      this.controller, this.myUser}) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +27,7 @@ class PasswordBox extends StatelessWidget {
         validator: (String value) {
           return value.length < 4 ? 'Password is too short' : null;
         },
-        onFieldSubmitted: onClick);
+        onFieldSubmitted: (v) {onClick();});
   }
 }
 
@@ -37,7 +35,7 @@ class UserNameBox extends StatelessWidget {
   final BuildContext context;
   final FocusNode mFocusNode;
   final TextEditingController controller;
-  final MyUser myUser;
+  final MyUserProfile myUser;
 
   const UserNameBox(
       this.context, this.mFocusNode, this.controller, this.myUser);
@@ -68,21 +66,20 @@ class UserNameBox extends StatelessWidget {
 }
 
 class LoginButton extends StatelessWidget {
-  const LoginButton(BuildContext context, this.onClick);
-
-  final onClick;
-
+  final Function onClick;
+  LoginButton({this.onClick}) : super();
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Padding(
-          padding: EdgeInsets.all(8),
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: SizedBox(
+          width: double.infinity,
           child: FlatButton(
             child: new Text("LOGIN"),
-            onPressed: onClick,
+            onPressed: () {
+              onClick();
+            },
             padding: const EdgeInsets.all(8),
-          )),
-    );
+          )));
   }
 }
